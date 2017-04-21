@@ -1,0 +1,35 @@
+.THIS .controls {
+    visibility: visible;
+    opacity:1;
+    transition: all 2s;
+}
+
+.THIS .controls_hidden {
+    visibility: hidden;
+    opacity:0;
+    height:0;
+    transition: all 0s;
+}
+
+.THIS .results {
+    visibility: hidden;
+    opacity:0;
+    height:0;
+	transition: all 0s;    
+
+}
+
+.THIS .results_visible {
+    visibility: visible;
+    opacity:1;
+    transition: all 2s;
+
+}
+
+.THIS .error {
+    display: none;
+}
+
+.THIS .error_show {
+    display: block;
+}

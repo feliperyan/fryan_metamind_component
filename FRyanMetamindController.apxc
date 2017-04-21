@@ -1,0 +1,35 @@
+global class FRyanMetamindController {
+		
+    	// New version which handles new metamind signup process.
+    
+    	@AuraEnabled
+        global static String getCallVisionUrl(String theURL, String theCert, String theEmail) {
+        JWT jwt = new JWT('RS256');
+	        jwt.iss = 'developer.force.com';
+    	    jwt.sub = theEmail;
+        	jwt.aud = 'https://api.metamind.io/v1/oauth2/token';
+	        jwt.exp = '3600';
+            
+            if (theCert.trim() != ''){
+				jwt.cert = theCert;                
+            }
+            
+            else {
+                ContentVersion base64Content = [SELECT Title, VersionData FROM ContentVersion where Title='einstein_platform' OR  Title='predictive_services' ORDER BY Title LIMIT 1];
+        		String keyContents = base64Content.VersionData.tostring();
+		        keyContents = keyContents.replace('-----BEGIN RSA PRIVATE KEY-----', '');
+        		keyContents = keyContents.replace('-----END RSA PRIVATE KEY-----', '');
+		        keyContents = keyContents.replace('\n', '');              
+        		jwt.pkcs8 = keyContents; // Comment this if you are using jwt.cert
+            }       
+            
+        	String access_token = JWTBearerFlow.getAccessToken('https://api.metamind.io/v1/oauth2/token', jwt);                
+
+	        // Make a prediction using URL to a file
+    	    List<Vision.Prediction> preds = Vision.predictUrl(theURL, access_token,'GeneralImageClassifier');
+  		
+        	return JSON.serialize(preds);
+
+    }
+    
+}

@@ -1,0 +1,46 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" 
+                access="global" 
+                controller="FRyanMetamindController">
+	
+	<aura:attribute name="image" default="http://metamind.io/images/generalimage.jpg" type="String"/>
+	<aura:attribute name="results" default="1,2,3" type="List"/>
+    
+	<aura:attribute name="cert" default="" type="String"/>
+	<aura:attribute name="email" default="" type="String"/>
+    
+    <div class="slds" style="padding:1rem; min-height:600px;">
+        
+        <div class="controls" aura:id="input">
+            <ui:inputText aura:id="txt1" label="Picture URL" class="slds-textarea" value="http://metamind.io/images/generalimage.jpg"/>
+            
+            <button class="slds-button slds-button--neutral" onclick="{!c.changedURL}" style="margin-top:0.5rem; padding:0.5rem">
+                Get new Image
+            </button>
+            
+            <img src="{!v.image}" style="max-width:600px; display:block; margin-right:auto; padding-top:0.5rem; padding-bottom:0.5rem;"/>
+            
+            <button class="slds-button slds-button--neutral" onclick="{!c.aloha}" style="padding:0.5rem">
+                <img style="margin-left:5px;" width="40" src="{!$Resource.metamind_icon}" />
+                Query Metamind
+            </button>
+		</div>
+        
+		<div class="results" aura:id="metamind">
+            <img src="{!$Resource.metamind_scientist}" width="300"/>
+            <p>&nbsp;</p>
+            <aura:iteration items="{!v.results}" var="item" indexVar="i">
+                <h1>{!item.label} &nbsp;&nbsp;<span class="slds-badge">{!item.probability}&#37;</span></h1>
+            </aura:iteration>
+			            
+            <button class="slds-button slds-button--neutral" onclick="{!c.toggleNav}" style="margin-top:0.5rem; padding:0.5rem">
+                Go back
+            </button>
+            
+        </div>
+        <div class="error" aura:id="error">
+        	<p style="color:red">Must include an email address used with Metamind's setup process.</p>
+        </div>
+        
+    </div>
+    
+</aura:component>

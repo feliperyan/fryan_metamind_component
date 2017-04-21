@@ -1,0 +1,7 @@
+<design:component label="Metamind Component">
+	<design:attribute name="cert" label="Old Certificate Name - Leave blank if you uploaded a pem file" 
+                      description="If you signup to Metamind recently and uploaded the einstein_platform.pem file leave this field blank!!!
+                                   However if you used the old method to signup and were asked to create a self-signed certificate
+                                   and all that stuff please include the name of your certificate here." />
+	<design:attribute name="email" label="Email" description="Email address used during Metamind signup" />
+</design:component>
